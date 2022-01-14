@@ -14,6 +14,6 @@ index 9a9241a..f3d6a77 100644
 +set(CPACK_PACKAGE_CONTACT "la1k (github@la1k.no)")
 +# Package information
 +set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Xerbo (xerbo@protonmail.com)")
-+set(CPACK_GENERATOR "DEB;TGZ")
++set(CPACK_GENERATOR "DEB")
 +set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
 +include(CPack)
