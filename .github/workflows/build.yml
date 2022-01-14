@@ -1,0 +1,50 @@
+name: Ubuntu
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Clone libpredict
+      run: git clone -b v2.0.0 https://github.com/la1k/libpredict.git
+
+    - name: Patch
+      run: cd libpredict && git apply ../CMakeLists.diff
+
+    - name: Configure CMake
+      run: cd libpredict && mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr ..
+
+    - name: Build
+      run: cd libpredict/build && make -j4
+
+    - name: Test
+      run: cd libpredict/build && make test
+
+    - name: Package
+      run: cd libpredict/build && make package
+
+    - name: Create Release
+      uses: actions/create-release@v1
+      id: create_release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        release_name: libpredict v2.0.0
+        body: Automatically built version of libpredict
+        draft: false
+        prerelease: false
+
+    - name: Upload package
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./libpredict-2.0.0-Linux.deb
+        asset_name: libpredict-2.0.0-Linux.deb
+        asset_content_type: application/vnd.debian.binary-package

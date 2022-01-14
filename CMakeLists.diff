@@ -1,0 +1,19 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9a9241a..f3d6a77 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -46,3 +46,14 @@ add_subdirectory(travis)
+ 
+ enable_testing()
+ add_subdirectory(tests)
++
++# Project information
++set(CPACK_PACKAGE_NAME "libpredict")
++set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A satellite orbit prediction library")
++set(CPACK_PACKAGE_HOMEPAGE_URL "https://github.com/la1k/libpredict")
++set(CPACK_PACKAGE_CONTACT "la1k (github@la1k.no)")
++# Package information
++set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Xerbo (xerbo@protonmail.com)")
++set(CPACK_GENERATOR "DEB;TGZ")
++set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
++include(CPack)
