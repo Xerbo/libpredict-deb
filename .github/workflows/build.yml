@@ -33,6 +33,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
+        tag_name: v2.0.0
         release_name: libpredict v2.0.0
         body: Automatically built version of libpredict
         draft: false
